@@ -528,6 +528,7 @@ HYPERPARAMS_SAMPLER = {
     "sac": sample_sac_params,
     "tqc": sample_tqc_params,
     "ppo": sample_ppo_params,
+    "mppo": sample_ppo_params,
     "td3": sample_td3_params,
     "trpo": sample_trpo_params,
 }

@@ -22,6 +22,7 @@ from optuna.study import MaxTrialsCallback
 from optuna.trial import TrialState
 from optuna.visualization import plot_optimization_history, plot_param_importances
 from sb3_contrib.common.vec_env import AsyncEval
+from sb3_contrib.common.maskable.callbacks import MaskableEvalCallback
 
 # For using HER with GoalEnv
 from stable_baselines3 import HerReplayBuffer  # noqa: F401
@@ -500,7 +501,7 @@ class ExperimentManager:
                 print("Creating test environment")
 
             save_vec_normalize = SaveVecNormalizeCallback(save_freq=1, save_path=self.params_path)
-            eval_callback = EvalCallback(
+            eval_callback = (MaskableEvalCallback if self.algo == "mppo" else EvalCallback)(
                 self.create_envs(self.n_eval_envs, eval_env=True),
                 callback_on_new_best=save_vec_normalize,
                 best_model_save_path=self.save_path,
